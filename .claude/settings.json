@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m unittest discover -s tests -t .)",
+      "Bash(python3 -W error::ResourceWarning -m unittest discover -s tests -t .)",
+      "Bash(python3 -m spend_teardown report *)"
+    ]
+  }
+}
