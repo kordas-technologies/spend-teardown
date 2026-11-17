@@ -7,7 +7,7 @@ of the EU General Data Protection Regulation (GDPR).
 ## Who is responsible
 
 Controller: Marcin Kordas, sole proprietorship trading as Kordas Technologies,
-{CONTROLLER_ADDRESS}, Poland, tax ID (NIP) {NIP}. Contact: biuro@kordas.tech.
+ul. Przemysłowa 12/400, 30-701 Kraków, Poland, tax ID (NIP) {NIP}. Contact: biuro@kordas.tech.
 
 ## 1. If we emailed you about a teardown
 
