@@ -133,7 +133,8 @@ def forbidden_from_scan(scan):
         out.add(os.path.basename(stream).rsplit(".", 1)[0])
         # meaningful slug parts, e.g. "-Users-alice-work-acme-api" -> "alice", "acme"
         for part in re.split(r"[-_/\\. ]+", info["project"]):
-            if len(part) >= 4 and part.lower() not in _COMMON_PARTS:
+            # purely numeric parts (years, versions) identify nobody and collide with day strings
+            if len(part) >= 4 and not part.isdigit() and part.lower() not in _COMMON_PARTS:
                 out.add(part)
     return sorted(out)
 

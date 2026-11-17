@@ -79,6 +79,12 @@ class PrivacyTests(unittest.TestCase):
         self.assertTrue(all(len(r["day"]) == 10 for r in export["by_day"]))
         self.assertTrue(export["by_project"][0]["project"].startswith("p_"))
 
+    def test_year_in_project_name_does_not_block_export(self):
+        fx.write(self.root, os.path.join("-Users-alice-trips-2026-plan", "s.jsonl"), [fx.assistant(4, "y")])
+        code, _out, err = self.scan()
+        self.assertEqual(code, 0, err)
+        self.assertNotIn("trips", _rd(self.out))
+
     def test_salted_hash_stable_per_machine_different_across_salts(self):
         self.scan()
         h1 = _jl(self.out)["by_project"][0]["project"]
