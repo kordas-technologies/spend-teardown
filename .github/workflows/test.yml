@@ -6,14 +6,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python: ["3.9", "3.12"]
+        # official Docker images: ubuntu-latest no longer ships every Python the package supports
+        python: ["3.9", "3.12", "3.14"]
+    container: python:${{ matrix.python }}-slim
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           persist-credentials: false
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
-        with:
-          python-version: ${{ matrix.python }}
       - name: unit tests (includes the no-network import test)
         run: python -W error::ResourceWarning -m unittest discover -s tests -t .
