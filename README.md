@@ -33,7 +33,8 @@ were committed before the tool saw any third-party data.
 Requires Python 3.9+. No dependencies.
 
 ```bash
-unzip spend-teardown-0.1.0.zip && cd spend-teardown-0.1.0   # or: cd into your clone
+git clone https://github.com/kordas-technologies/spend-teardown && cd spend-teardown
+git checkout v0.1.0   # pin the release you reviewed
 python3 -m spend_teardown scan --days 30 --report teardown.md
 ```
 
