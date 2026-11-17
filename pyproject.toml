@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spend-teardown"
+version = "0.1.0"
+description = "Local, offline diagnosis of coding-agent token spend mechanisms"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+spend-teardown = "spend_teardown.cli:main"
+
+[tool.setuptools]
+packages = ["spend_teardown"]
+
+[tool.setuptools.package-data]
+spend_teardown = ["data/*.json"]

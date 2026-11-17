@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+# never commit real exports or reports
+spend-teardown-export*.json
+spend-teardown-team*.json
+teardown*.md
+real-data/
