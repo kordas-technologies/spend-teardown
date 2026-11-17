@@ -33,7 +33,7 @@ were committed before the tool saw any third-party data.
 Requires Python 3.9+. No dependencies.
 
 ```bash
-git clone <this repo> && cd spend-teardown
+unzip spend-teardown-0.1.0.zip && cd spend-teardown-0.1.0   # or: cd into your clone
 python3 -m spend_teardown scan --days 30 --report teardown.md
 ```
 
