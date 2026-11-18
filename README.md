@@ -17,6 +17,8 @@ It prints a report with a projected saving per mechanism and a combined projecti
 All formulas and constants are fixed in [METHODOLOGY.md](METHODOLOGY.md), versioned, and
 were committed before the tool saw any third-party data.
 
+See [SAMPLE_TEARDOWN.md](SAMPLE_TEARDOWN.md) for a full written teardown built from our own team's usage.
+
 ## How it compares
 
 | | ccusage and similar | spend-teardown |
@@ -77,5 +79,7 @@ blocked the export · `5` no usage data in the window.
 ## License
 
 MIT. Support is best effort, without an SLA. See [SECURITY.md](SECURITY.md).
+
+Built and maintained by Martin Kordas, [Kordas Technologies](https://kordas.tech) (Kraków, Poland). Free teardowns: biuro@kordas.tech.
 
 Not affiliated with Anthropic.
