@@ -42,4 +42,4 @@ ul. Przemysłowa 12/400, 30-701 Kraków, Poland, tax ID (NIP) 677-244-60-64. Con
 
 ## Changes
 
-We will date every change to this notice. Current version: 2026-11-17 (draft, not yet in force).
+We will date every change to this notice. Current version: 2026-11-18.
