@@ -1,7 +1,7 @@
 {
   "source": "Anthropic API pricing page, https://platform.claude.com/docs/en/about-claude/pricing (model pricing table), fetched 2026-11-20",
   "as_of": "2026-11-20",
-  "note": "USD per million tokens, first-party API, global routing (inference_geo us = 1.1x, not modelled). Claude Haiku 5.5 is priced by prompt length: a request whose prompt (input + cache writes + cache reads) is over 100,000 tokens pays the long_context rates for the whole request. Changed vs 2026-10-08: claude-sonnet-5-5 cache_read 0.2 -> 0.10. Replace with --pricing <file> when prices change.",
+  "note": "USD per million tokens, first-party API, global routing (inference_geo us = 1.1x, not modelled). Claude Haiku 5.5 is priced by prompt length: a request whose prompt (input + cache writes + cache reads) is over 100,000 tokens pays the long_context rates for the whole request. The v0.1.0 table (dated 2026-10-08) had claude-sonnet-5-5 cache_read 0.2; the vendor page already showed 0.10 on 2026-10-08 04:32 UTC (Wayback snapshot 20261008043247; 0.20 on 20261007211533). Replace with --pricing <file> when prices change.",
   "models": {
     "claude-fable-5-2": {
       "input": 8,

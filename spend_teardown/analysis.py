@@ -1,4 +1,4 @@
-"""Mechanism detectors M1-M5 and the combined projection (METHODOLOGY.md v1).
+"""Mechanism detectors M1-M5 and the combined projection (METHODOLOGY.md v3).
 
 Everything returned here is still keyed by raw project slug; export.py replaces
 slugs with salted hashes before anything leaves the machine.
@@ -8,7 +8,7 @@ import bisect
 import collections
 import datetime as dt
 
-# Frozen constants, METHODOLOGY v1
+# Frozen constants, METHODOLOGY v3 (v1 values unless noted)
 LOOP_MIN_AUTO = 3
 LOOP_SPAN_S = 3600
 FREE_COMPACTIONS_PER_STREAM = 2
@@ -21,6 +21,7 @@ FLOOR_REFERENCE = 40_000
 BLOAT_LINE = 200_000
 BLOAT_AVOIDABLE = 0.5
 EXPENSIVE_RATIO = 3.0
+BASELINE_MIN_CALL_SHARE = 0.01  # v3: M5 baseline must carry at least 1% of calls
 ROUTING_ADOPTION = 0.5
 GATE_PCT = 20.0
 LOW_CONFIDENCE_UNPRICED_SHARE = 0.10
@@ -185,8 +186,11 @@ def analyze(scan, pricing, tz=None):
     m5 = dict(events=0, cost_usd=0.0, cost_at_cheapest_usd=0.0, saving_usd=0.0, cheapest_model=None,
               expensive_models=[])
     positive = {m: p for m, p in seen_priced.items() if p["output"] > 0}
+    calls_by_model = collections.Counter(c.model for c in calls)
+    baseline = {m: p for m, p in positive.items()
+                if calls_by_model[m] >= BASELINE_MIN_CALL_SHARE * len(calls)} or positive
     if positive:
-        cheapest = min(positive, key=lambda m: positive[m]["output"])
+        cheapest = min(baseline, key=lambda m: baseline[m]["output"])
         cp = positive[cheapest]
         expensive = sorted(m for m, p in positive.items() if p["output"] >= EXPENSIVE_RATIO * cp["output"])
         m5["cheapest_model"] = cheapest

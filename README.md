@@ -36,7 +36,7 @@ Requires Python 3.9+. No dependencies.
 
 ```bash
 git clone https://github.com/kordas-technologies/spend-teardown && cd spend-teardown
-git checkout v0.1.0   # pin the release you reviewed
+git checkout v0.2.0   # pin the release you reviewed
 python3 -m spend_teardown scan --days 30 --report teardown.md
 ```
 

@@ -85,6 +85,29 @@ class AnalysisTests(unittest.TestCase):
         diff = (10 * 5 + 1000 * 25 - (10 * 1 + 1000 * 5)) / 1e6
         self.assertAlmostEqual(m5["saving_usd"], diff * 0.5, places=4)
 
+    def _m5_with_tiny(self, tiny_calls):
+        pricing = Pricing({"source": "test", "as_of": "test", "models": {
+            "cheap": {"input": 1, "output": 5, "cache_write_1h": 2, "cache_write_5m": 1.25, "cache_read": 0.1},
+            "big": {"input": 5, "output": 25, "cache_write_1h": 10, "cache_write_5m": 6.25, "cache_read": 0.5},
+            "tiny": {"input": 0.1, "output": 0.5, "cache_write_1h": 0.2, "cache_write_5m": 0.125, "cache_read": 0.01},
+        }})
+        lines = [fx.assistant(i, "m%d" % i, model="cheap") for i in range(100 - tiny_calls)]
+        lines += [fx.assistant(200 + i, "s%d" % i, model="big", out=1000, sidechain=True) for i in range(100)]
+        lines += [fx.assistant(400 + i, "t%d" % i, model="tiny") for i in range(tiny_calls)]
+        fx.write(self.root, fx.session_file(), lines)
+        return analyze(scan(self.root), pricing, None)["mechanisms"]["expensive_subagents"]
+
+    def test_m5_baseline_ignores_model_below_one_percent_of_calls(self):
+        # methodology v3: 1 call of 200 (0.5%) on a cheaper model must not become the baseline
+        m5 = self._m5_with_tiny(1)
+        self.assertEqual(m5["cheapest_model"], "cheap")
+        self.assertEqual(m5["expensive_models"], ["big"])
+        self.assertEqual(m5["events"], 100)
+
+    def test_m5_baseline_accepts_model_at_one_percent_of_calls(self):
+        m5 = self._m5_with_tiny(2)  # 2 of 200 = 1%
+        self.assertEqual(m5["cheapest_model"], "tiny")
+
     def test_unpriced_model_not_priced_as_other(self):
         r = self.run_lines([fx.assistant(0, "a", model="mystery-model", cr=1_000_000)])
         self.assertEqual(r["totals"]["cost_usd"], 0)

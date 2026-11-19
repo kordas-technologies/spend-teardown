@@ -1,6 +1,6 @@
 # Methodology (pre-registered)
 
-Version: methodology v2 (v1 frozen 2026-11-17, **before any third-party data was analysed**; v2 changes only how one record is priced, see the changelog).
+Version: methodology v3 (v1 frozen 2026-11-17, **before any third-party data was analysed**; v2 changes how one record is priced, v3 changes how M5 picks its baseline model; see the changelog. No third-party data had been analysed before v2 or v3 either).
 Any change to a formula or constant below bumps the methodology version and is
 recorded in the changelog at the bottom. Reports always print the methodology
 version they were computed with.
@@ -25,7 +25,7 @@ not their waste.
   A model row may carry a `long_context` block with `over_prompt_tokens`
   (Claude Haiku 5.5: 100,000). A record whose prompt (input + cache writes +
   cache reads) is over that number is priced entirely at the `long_context`
-  rates, as the vendor bills it. M5 picks the expensive tier and the cheapest
+  rates, as the vendor bills it. M5 picks the expensive tier and the baseline
   model from the base rates; its saving re-prices each call with this rule,
   tier included.
 
@@ -103,12 +103,15 @@ projected saving (USD) under the stated assumption. Constants are fixed here.
 
 ### M5 — Expensive model on routine work
 
-- Expensive tier = models whose output price is at least 3× the cheapest priced
-  model seen in the window with output price > 0 (computed from the pricing
-  table, not from model names).
+- Baseline model = the cheapest priced model (output price > 0) that carries
+  **at least 1% of all API calls in the window** (v3). If no priced model
+  reaches 1%, the cheapest priced model seen in the window is used.
+- Expensive tier = priced models seen in the window whose output price is at
+  least 3× the baseline model's (computed from the pricing table, not from
+  model names). The 1% rule applies only to the baseline, not to this tier.
 - Event: a **subagent / sidechain** call on an expensive-tier model.
 - **Projected saving:** 50% adoption × (cost of those calls − the same tokens
-  priced at the cheapest priced model seen in the window).
+  priced at the baseline model).
 
 ## Combined projection
 
@@ -131,11 +134,21 @@ unpriced tokens exceed 10% of all tokens the projection is marked
 ## Changelog
 
 - v1 (2026-11-17): initial frozen version.
-- v2 (2026-11-20, not released): prompt-length pricing tier (`long_context`)
+- v2 (2026-11-20, released in 0.2.0 together with v3): prompt-length pricing tier (`long_context`)
   in the cost of one record. No detector formula or constant changed. Bundled
   table refreshed the same day (adds Claude Fable 5.2, Claude Haiku 5.5 and
   older rows; Claude Sonnet 5.5 cache read 0.2 → 0.10 USD/MTok). Note for M5:
   once Claude Haiku 5.5 is priced, any window that contains even a few Haiku 5.5
   calls makes it the cheapest model, so M5 re-prices subagent calls at Haiku
-  rates. On our own 3–17.11 data that moves M5 from 1.2% to 8.7% of spend. The
-  rule is unchanged; read M5 with that in mind.
+  rates. On our own 3–17.11 data that moves M5 from 1.2% to 8.7% of spend.
+  The v0.1.0 cache-read row for Claude Sonnet 5.5 (0.2) was already out of
+  date when the table was dated 2026-10-08: the vendor page shows 0.20 in the
+  Wayback Machine snapshot 20261007211533 and 0.10 in 20261008043247.
+- v3 (2026-11-20, released in 0.2.0 together with v2): M5 baseline model must
+  carry at least 1% of the window's API calls (`BASELINE_MIN_CALL_SHARE`).
+  Reason: under v2 a model with 0.79% of calls (Claude Haiku 5.5, 224 of
+  28,464 calls in our own 3–17.11 window) became the price yardstick for all
+  subagent work, which turned a model nobody uses for that work into the
+  recommendation. On the same data M5 is 1.38% of spend under v3 (baseline
+  Claude Sonnet 5.5, expensive tier Claude Fable 5.1). Exports from v1 or v2
+  cannot be merged with v3.
