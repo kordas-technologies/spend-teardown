@@ -1,15 +1,141 @@
 {
-  "source": "Anthropic API pricing page (platform.claude.com/docs/en/about-claude/pricing), copied by hand",
-  "as_of": "2026-10-08",
-  "note": "USD per million tokens. Haiku 4.5 row is an assumption (not in the fetched excerpt). Replace with --pricing <file> when prices change.",
+  "source": "Anthropic API pricing page, https://platform.claude.com/docs/en/about-claude/pricing (model pricing table), fetched 2026-11-20",
+  "as_of": "2026-11-20",
+  "note": "USD per million tokens, first-party API, global routing (inference_geo us = 1.1x, not modelled). Claude Haiku 5.5 is priced by prompt length: a request whose prompt (input + cache writes + cache reads) is over 100,000 tokens pays the long_context rates for the whole request. Changed vs 2026-10-08: claude-sonnet-5-5 cache_read 0.2 -> 0.10. Replace with --pricing <file> when prices change.",
   "models": {
-    "claude-sonnet-5-5": {"input": 2, "output": 10, "cache_write_1h": 4, "cache_write_5m": 2.5, "cache_read": 0.2},
-    "claude-sonnet-5":   {"input": 2, "output": 10, "cache_write_1h": 4, "cache_write_5m": 2.5, "cache_read": 0.2},
-    "claude-opus-5-5":   {"input": 4, "output": 20, "cache_write_1h": 8, "cache_write_5m": 5, "cache_read": 0.2},
-    "claude-opus-5":     {"input": 5, "output": 25, "cache_write_1h": 10, "cache_write_5m": 6.25, "cache_read": 0.5},
-    "claude-opus-4-8":   {"input": 5, "output": 25, "cache_write_1h": 10, "cache_write_5m": 6.25, "cache_read": 0.5},
-    "claude-fable-5-1":  {"input": 10, "output": 50, "cache_write_1h": 20, "cache_write_5m": 12.5, "cache_read": 0.25},
-    "claude-fable-5":    {"input": 10, "output": 50, "cache_write_1h": 20, "cache_write_5m": 12.5, "cache_read": 1.0},
-    "claude-haiku-4-5-20251001": {"input": 1, "output": 5, "cache_write_1h": 2, "cache_write_5m": 1.25, "cache_read": 0.1}
+    "claude-fable-5-2": {
+      "input": 8,
+      "output": 40,
+      "cache_write_1h": 16,
+      "cache_write_5m": 10,
+      "cache_read": 0.2
+    },
+    "claude-mythos-5-2": {
+      "input": 8,
+      "output": 40,
+      "cache_write_1h": 16,
+      "cache_write_5m": 10,
+      "cache_read": 0.2
+    },
+    "claude-fable-5-1": {
+      "input": 10,
+      "output": 50,
+      "cache_write_1h": 20,
+      "cache_write_5m": 12.5,
+      "cache_read": 0.25
+    },
+    "claude-mythos-5-1": {
+      "input": 10,
+      "output": 50,
+      "cache_write_1h": 20,
+      "cache_write_5m": 12.5,
+      "cache_read": 0.25
+    },
+    "claude-fable-5": {
+      "input": 10,
+      "output": 50,
+      "cache_write_1h": 20,
+      "cache_write_5m": 12.5,
+      "cache_read": 1.0
+    },
+    "claude-mythos-5": {
+      "input": 10,
+      "output": 50,
+      "cache_write_1h": 20,
+      "cache_write_5m": 12.5,
+      "cache_read": 1.0
+    },
+    "claude-opus-5-5": {
+      "input": 4,
+      "output": 20,
+      "cache_write_1h": 8,
+      "cache_write_5m": 5,
+      "cache_read": 0.2
+    },
+    "claude-opus-5": {
+      "input": 5,
+      "output": 25,
+      "cache_write_1h": 10,
+      "cache_write_5m": 6.25,
+      "cache_read": 0.5
+    },
+    "claude-opus-4-8": {
+      "input": 5,
+      "output": 25,
+      "cache_write_1h": 10,
+      "cache_write_5m": 6.25,
+      "cache_read": 0.5
+    },
+    "claude-opus-4-7": {
+      "input": 5,
+      "output": 25,
+      "cache_write_1h": 10,
+      "cache_write_5m": 6.25,
+      "cache_read": 0.5
+    },
+    "claude-opus-4-6": {
+      "input": 5,
+      "output": 25,
+      "cache_write_1h": 10,
+      "cache_write_5m": 6.25,
+      "cache_read": 0.5
+    },
+    "claude-sonnet-5-5": {
+      "input": 2,
+      "output": 10,
+      "cache_write_1h": 4,
+      "cache_write_5m": 2.5,
+      "cache_read": 0.1
+    },
+    "claude-sonnet-5": {
+      "input": 2,
+      "output": 10,
+      "cache_write_1h": 4,
+      "cache_write_5m": 2.5,
+      "cache_read": 0.2
+    },
+    "claude-sonnet-4-6": {
+      "input": 3,
+      "output": 15,
+      "cache_write_1h": 6,
+      "cache_write_5m": 3.75,
+      "cache_read": 0.3
+    },
+    "claude-sonnet-4-5": {
+      "input": 3,
+      "output": 15,
+      "cache_write_1h": 6,
+      "cache_write_5m": 3.75,
+      "cache_read": 0.3
+    },
+    "claude-haiku-5-5": {
+      "input": 0.1,
+      "output": 0.5,
+      "cache_write_1h": 0.2,
+      "cache_write_5m": 0.125,
+      "cache_read": 0.01,
+      "long_context": {
+        "input": 0.5,
+        "output": 2.5,
+        "cache_write_1h": 1.0,
+        "cache_write_5m": 0.625,
+        "cache_read": 0.05,
+        "over_prompt_tokens": 100000
+      }
+    },
+    "claude-haiku-4-5": {
+      "input": 1,
+      "output": 5,
+      "cache_write_1h": 2,
+      "cache_write_5m": 1.25,
+      "cache_read": 0.1
+    },
+    "claude-haiku-4-5-20251001": {
+      "input": 1,
+      "output": 5,
+      "cache_write_1h": 2,
+      "cache_write_5m": 1.25,
+      "cache_read": 0.1
+    }
   }
 }

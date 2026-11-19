@@ -1,6 +1,6 @@
 # Methodology (pre-registered)
 
-Version: methodology v1, frozen 2026-11-17, **before any third-party data was analysed**.
+Version: methodology v2 (v1 frozen 2026-11-17, **before any third-party data was analysed**; v2 changes only how one record is priced, see the changelog).
 Any change to a formula or constant below bumps the methodology version and is
 recorded in the changelog at the bottom. Reports always print the methodology
 version they were computed with.
@@ -22,6 +22,12 @@ not their waste.
   5m cache write, cache read). The bundled table has a `source` and `as_of`
   field. Models missing from the table are counted in tokens and reported as
   **unpriced**; they are never silently priced as another model.
+  A model row may carry a `long_context` block with `over_prompt_tokens`
+  (Claude Haiku 5.5: 100,000). A record whose prompt (input + cache writes +
+  cache reads) is over that number is priced entirely at the `long_context`
+  rates, as the vendor bills it. M5 picks the expensive tier and the cheapest
+  model from the base rates; its saving re-prices each call with this rule,
+  tier included.
 
 ## Record selection
 
@@ -125,3 +131,11 @@ unpriced tokens exceed 10% of all tokens the projection is marked
 ## Changelog
 
 - v1 (2026-11-17): initial frozen version.
+- v2 (2026-11-20, not released): prompt-length pricing tier (`long_context`)
+  in the cost of one record. No detector formula or constant changed. Bundled
+  table refreshed the same day (adds Claude Fable 5.2, Claude Haiku 5.5 and
+  older rows; Claude Sonnet 5.5 cache read 0.2 → 0.10 USD/MTok). Note for M5:
+  once Claude Haiku 5.5 is priced, any window that contains even a few Haiku 5.5
+  calls makes it the cheapest model, so M5 re-prices subagent calls at Haiku
+  rates. On our own 3–17.11 data that moves M5 from 1.2% to 8.7% of spend. The
+  rule is unchanged; read M5 with that in mind.

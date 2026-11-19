@@ -46,6 +46,8 @@ Options worth knowing:
 - `--tz UTC` / `--tz +09:00` / `--tz Europe/Warsaw` — where day boundaries fall (default: your local time).
 - `--pricing my-prices.json` — your own rates. Models missing from the table are counted in tokens and
   reported as *unpriced*; they are never priced as some other model.
+  Claude Haiku 5.5 is priced by prompt length (over 100,000 prompt tokens = higher rates), as on the
+  vendor's pricing page; the bundled table carries both rates.
 - `--show-export` — print the exact JSON you would share, before you share it.
 
 Team view: each developer runs `scan`, then one person runs
