@@ -11,12 +11,18 @@ ul. Przemysłowa 12/400, 30-701 Kraków, Poland, tax ID (NIP) 677-244-60-64. Con
 
 ## 1. If we emailed you about a teardown
 
-- **What we hold:** your name (if it was published), your business email address, your
-  company name and the public source that led us to you (for example a public repository
-  that contains Claude Code configuration, or a public post by your company).
-- **Where we got it:** from your company's public website (contact page, footer,
-  security.txt) or a public company profile. We do not take email addresses from git
-  commit metadata.
+- **What we hold:** your name (if it was published), your email address, your company
+  name and the public source that led us to you (for example a public repository that
+  contains Claude Code configuration, or a public post by your company).
+- **Where we got it:** a company address from your company's public website (contact
+  page, footer) or a public company profile. If we wrote to you by name: your name and
+  GitHub username from your public commits to your company's public repository, and your
+  email address only if you published it yourself on your public GitHub profile or on
+  your company's website. We do not take email addresses from git commit metadata and we
+  do not guess addresses from name patterns.
+- **More than one person at a company:** we may write to up to three people or teams at
+  the same company, each in a separate email. A "stop" from any of them ends our emails
+  to everyone at that company.
 - **Why and on what basis:** to offer a free teardown to a business, based on our
   legitimate interest in business-to-business outreach (GDPR Art. 6(1)(f)).
 - **How long:** if you don't reply, we delete your data 90 days after our last email. If you
@@ -42,4 +48,4 @@ ul. Przemysłowa 12/400, 30-701 Kraków, Poland, tax ID (NIP) 677-244-60-64. Con
 
 ## Changes
 
-We will date every change to this notice. Current version: 2026-11-18.
+We will date every change to this notice. Current version: 2026-11-21.
